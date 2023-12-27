@@ -17,7 +17,7 @@ pygame.display.set_caption("Running Dino")
 # MainTestSuite.addTest(unittest.unittest.TestLoader.loadTestsFromTestCase(FunctionsTests))
 
 # creating icon of the game with file loading
-icon = pygame.image.load('resources/dino/dino.jpg')
+icon = pygame.image.load("resources/dino/dino.jpg")
 # putting icon into display on the left upper corner
 pygame.display.set_icon(icon)
 
@@ -25,7 +25,8 @@ pygame.display.set_icon(icon)
 cactus_img = [
     pygame.image.load("resources/cactus/Cactus0.png"),
     pygame.image.load("resources/cactus/Cactus1.png"),
-    pygame.image.load("resources/cactus/Cactus2.png")]
+    pygame.image.load("resources/cactus/Cactus2.png"),
+]
 
 # consider parameters of every file: the same width;
 # height=display_height - 100 - cactus' height
@@ -40,7 +41,8 @@ dino_img = [
     pygame.image.load("resources/dino/Dino1.png"),
     pygame.image.load("resources/dino/Dino2.png"),
     pygame.image.load("resources/dino/Dino3.png"),
-    pygame.image.load("resources/dino/Dino4.png")]
+    pygame.image.load("resources/dino/Dino4.png"),
+]
 
 # counter of count of pictures of dino with already shown body positions
 img_counter = 0
@@ -63,10 +65,14 @@ usr_x = display_width // 3
 usr_y = display_height - usr_height - 100
 
 #                               parameters of realistic (stones, clouds)
-stone_img = [pygame.image.load('resources/stones/Stone0.png'),
-             pygame.image.load('resources/stones/Stone1.png')]
-cloud_img = [pygame.image.load('resources/clouds/Cloud0.png'),
-             pygame.image.load('resources/clouds/Cloud1.png')]
+stone_img = [
+    pygame.image.load("resources/stones/Stone0.png"),
+    pygame.image.load("resources/stones/Stone1.png"),
+]
+cloud_img = [
+    pygame.image.load("resources/clouds/Cloud0.png"),
+    pygame.image.load("resources/clouds/Cloud1.png"),
+]
 
 clock = pygame.time.Clock()  # responsible for updating game frames
 
@@ -148,7 +154,7 @@ class Object:
 
 
 class Button:
-    """ The Button's class
+    """The Button's class
 
     Class creating and drawing the buttons
 
@@ -194,8 +200,9 @@ class Button:
         # https://younglinux.info/pygame/mouse?ysclid=lqn35m0v14335914713
 
         if x < mouse[0] < x + self.width and y < mouse[1] < y + self.height:
-            pygame.draw.rect(display, self.active_color,
-                             (x, y, self.width, self.height))
+            pygame.draw.rect(
+                display, self.active_color, (x, y, self.width, self.height)
+            )
 
             if click[0] == 1:
                 # time program wait till respond to a click
@@ -207,8 +214,9 @@ class Button:
                     else:
                         action()
         else:
-            pygame.draw.rect(display, self.inactive_color,
-                             (x, y, self.width, self.height))
+            pygame.draw.rect(
+                display, self.inactive_color, (x, y, self.width, self.height)
+            )
 
         print_text(message=message, x=x + 10, y=y + 10, font_size=font_size)
 
@@ -224,7 +232,7 @@ def show_menu():
 
     Returns: None
     """
-    menu_background = pygame.image.load('resources/mics/menu.png')
+    menu_background = pygame.image.load("resources/mics/menu.png")
 
     start_button = Button(288, 60)
     quit_button = Button(120, 60)
@@ -286,9 +294,13 @@ def game_cycle():  # function which starting dino game
     create_cactus_arr(cactus_arr)
 
     stone, cloud = open_random_objects()
-    heart = Object(random.randrange(10000, 12000),
-                   random.randrange(300, 500),
-                   30, health_img, 4)
+    heart = Object(
+        random.randrange(10000, 12000),
+        random.randrange(300, 500),
+        30,
+        health_img,
+        4,
+    )
 
     now = time.time()
 
@@ -397,8 +409,11 @@ def create_cactus_arr(array):
     width = cactus_options[choice * 2]
     # zero one height - second, first one - third ...
     height = cactus_options[choice * 2 + 1]
-    array.append(Object(display_width - random.randint(100, 200), height,
-                        width, img, speeed))
+    array.append(
+        Object(
+            display_width - random.randint(100, 200), height, width, img, speeed
+        )
+    )
 
     # 3 is not accessible => 0, 1, 2; equal cacti count
     choice = random.randrange(0, 3)
@@ -407,8 +422,11 @@ def create_cactus_arr(array):
     width = cactus_options[choice * 2]
     # zero one height - second, first one - third ...
     height = cactus_options[choice * 2 + 1]
-    array.append(Object(display_width + random.randint(100, 300), height,
-                        width, img, speeed))
+    array.append(
+        Object(
+            display_width + random.randint(100, 300), height, width, img, speeed
+        )
+    )
     # 3 is not accessible => 0, 1, 2; equal cacti count
     choice = random.randrange(0, 3)
     img = cactus_img[choice]  # choosing image of random cacti
@@ -416,8 +434,11 @@ def create_cactus_arr(array):
     width = cactus_options[choice * 2]
     # zero one height - second, first one - third ...
     height = cactus_options[choice * 2 + 1]
-    array.append(Object(display_width + random.randint(400, 600), height,
-                        width, img, speeed))
+    array.append(
+        Object(
+            display_width + random.randint(400, 600), height, width, img, speeed
+        )
+    )
 
 
 def draw_array(array):
@@ -454,6 +475,8 @@ def find_radius(array):
         radius(int): the distance through which a new cactus will be born,
         when viewed from the rightmost
     """
+    print(len(array))
+    print(array[0].y, array[1].y, array[2].y)
     # x positions of every cactus
     maximum = max(array[0].x, array[1].x, array[2].x)
     if maximum < display_width:
@@ -534,16 +557,21 @@ def move_objects(stone, cloud):
         choice = random.randrange(0, 2)
         img_of_stone = stone_img[choice]
         # where are we reborn and how :
-        stone.return_self(display_width, 500 + random.randrange(10, 80),
-                          stone.width, img_of_stone)
+        stone.return_self(
+            display_width,
+            500 + random.randrange(10, 80),
+            stone.width,
+            img_of_stone,
+        )
 
     check = cloud.move(speeed)
     if not check:  # if out of display
         choice = random.randrange(0, 2)
         img_of_cloud = cloud_img[choice]
         # where are we reborn and how :
-        cloud.return_self(display_width, random.randrange(10, 200),
-                          cloud.width, img_of_cloud)
+        cloud.return_self(
+            display_width, random.randrange(10, 200), cloud.width, img_of_cloud
+        )
 
 
 def draw_dino():
@@ -574,8 +602,14 @@ def draw_dino():
 
 
 # working with the game's fonts, PingPong.tts - our game's main font
-def print_text(message, x, y, font_color=(0, 0, 0),
-               font_type="resources/fonts/PingPong.ttf", font_size=30):
+def print_text(
+    message,
+    x,
+    y,
+    font_color=(0, 0, 0),
+    font_type="resources/fonts/PingPong.ttf",
+    font_size=30,
+):
     """Output some text on the display
 
     Args:
@@ -618,7 +652,7 @@ def pause():
             if event.type == pygame.QUIT:  # click red roast
                 quit()
 
-        print_text('Paused. Press enter to continue', 160, 300)
+        print_text("Paused. Press enter to continue", 160, 300)
 
         keys = pygame.key.get_pressed()  # all kinds of keyboard press
         # setting the right to continue the game on the button ENTER
@@ -641,8 +675,11 @@ def check_collision(barriers):
     for barrier in barriers:  # if we go down - positive count
         if barrier.y == 449:  # for little cactus
             if not make_jump:
-                if barrier.x <= usr_x \
-                        + usr_width - 30 <= barrier.x + barrier.width:
+                if (
+                    barrier.x
+                    <= usr_x + usr_width - 30
+                    <= barrier.x + barrier.width
+                ):
                     if check_health():
                         object_return(barriers, barrier)
                         return False
@@ -651,8 +688,11 @@ def check_collision(barriers):
             elif jump_counter >= 0:  # if going up
                 # if lower edge dino is in barrier (cactus):
                 if usr_y + usr_height - 10 >= barrier.y:
-                    if barrier.x <= usr_x \
-                            + usr_width - 45 <= barrier.x + barrier.width:
+                    if (
+                        barrier.x
+                        <= usr_x + usr_width - 45
+                        <= barrier.x + barrier.width
+                    ):
                         if check_health():
                             object_return(barriers, barrier)
                             return False
@@ -666,8 +706,11 @@ def check_collision(barriers):
                             return False
                         else:
                             return True
-                    elif barrier.x <= usr_x + usr_width - 35 <= barrier.x \
-                            + barrier.width:
+                    elif (
+                        barrier.x
+                        <= usr_x + usr_width - 35
+                        <= barrier.x + barrier.width
+                    ):
                         if check_health():
                             object_return(barriers, barrier)
                             return False
@@ -675,8 +718,11 @@ def check_collision(barriers):
                             return True
         else:  # for big cacti
             if not make_jump:  # if right part of dino is in barrier - collision
-                if barrier.x <= usr_x + usr_width - 10 <= barrier.x \
-                        + barrier.width:
+                if (
+                    barrier.x
+                    <= usr_x + usr_width - 10
+                    <= barrier.x + barrier.width
+                ):
                     if check_health():
                         object_return(barriers, barrier)
                         return False
@@ -684,8 +730,11 @@ def check_collision(barriers):
                         return True
             elif jump_counter >= 0:  # in part of jumping up
                 if usr_y + usr_height - 15 >= barrier.y:
-                    if barrier.x <= usr_x + usr_width - \
-                            40 <= barrier.x + barrier.width:
+                    if (
+                        barrier.x
+                        <= usr_x + usr_width - 40
+                        <= barrier.x + barrier.width
+                    ):
                         if check_health():
                             object_return(barriers, barrier)
                             return False
@@ -693,8 +742,11 @@ def check_collision(barriers):
                             return True
             elif jump_counter < 0:  # in part of jumping down
                 if usr_y + usr_height - 10 >= barrier.y:
-                    if barrier.x <= usr_x + usr_width - \
-                            43 <= barrier.x + barrier.width:
+                    if (
+                        barrier.x
+                        <= usr_x + usr_width - 43
+                        <= barrier.x + barrier.width
+                    ):
                         if check_health():
                             object_return(barriers, barrier)
                             return False
@@ -758,8 +810,8 @@ def game_over():
                 pygame.quit()
                 quit()
 
-        print_text('Game over. Press Enter to play again, Esc to exit', 40, 300)
-        print_text('Max scores: ' + str(max_scores), 300, 350)
+        print_text("Game over. Press Enter to play again, Esc to exit", 40, 300)
+        print_text("Max scores: " + str(max_scores), 300, 350)
 
         keys = pygame.key.get_pressed()  # every possible click at the keyboard
         # setting the right to continue the game on the button ENTER
@@ -833,19 +885,21 @@ def hearts_plus(heart):
     # if user couldn't catch the heart (it is passed to the left):
     if heart.x <= -heart.width:
         radius = display_width + random.randrange(10000, 12000)
-        heart.return_self(radius, random.randrange(250, 400),
-                          heart.width, heart.image)
+        heart.return_self(
+            radius, random.randrange(250, 400), heart.width, heart.image
+        )
     if usr_x <= heart.x <= usr_x + usr_width:
         if usr_y <= heart.y <= usr_y + usr_height:
             # if user could catch the heart:
             if health < 7:
                 health += 1
             radius = display_width + random.randrange(10000, 12000)
-            heart.return_self(radius, random.randrange(250, 400),
-                              heart.width, heart.image)
+            heart.return_self(
+                radius, random.randrange(250, 400), heart.width, heart.image
+            )
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     # the main three strings
     show_menu()
     pygame.quit()
